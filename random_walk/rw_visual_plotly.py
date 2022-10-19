@@ -1,7 +1,7 @@
 from plotly.graph_objects import Scatter, Layout
 from plotly import offline
 
-from random_walk import RandomWalk
+from p2_data_visualization.dice.random_walk.random_walk import RandomWalk
 
 # Keep making new walks, as long as the program is active.
 while True:
