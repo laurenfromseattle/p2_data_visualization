@@ -1,0 +1,46 @@
+import json
+
+from plotly.graph_objs import Scattergeo, Layout
+from plotly import offline
+
+# Load data.
+filename = "data/eq_data_30_day_m1.json"
+with open(filename) as f:
+    all_eq_data = json.load(f)
+
+# Create list of earthquakes and extract relevant data for each.
+all_eq_dicts = all_eq_data["features"]
+mags, lons, lats, hover_texts = [], [], [], []
+for eq_dict in all_eq_dicts:
+    mags.append(eq_dict["properties"]["mag"])
+    lons.append(eq_dict["geometry"]["coordinates"][0])
+    lats.append(eq_dict["geometry"]["coordinates"][1])
+    hover_texts.append(eq_dict["properties"]["title"])
+
+# Extract plot title.
+plot_title = all_eq_data["metadata"]["title"]
+
+# Map the earthquakes.
+data = [
+    {
+        "type": "scattergeo",
+        "lon": lons,
+        "lat": lats,
+        "text": hover_texts,
+        "marker": {
+            "size": [5 * mag for mag in mags],
+            "color": mags,
+            "colorscale": "Viridis",
+            "reversescale": True,
+            "colorbar": {"title": "Magnitude"},
+        },
+    }
+]
+
+my_layout = Layout(
+    title=dict(font_color="black", font_size=24, text=plot_title, x=0.5),
+    margin=dict(l=20, r=20, t=60, b=20),
+)
+
+fig = {"data": data, "layout": my_layout}
+offline.plot(fig, filename="global_earthquakes.html")
