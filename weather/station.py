@@ -47,6 +47,8 @@ class WeatherStation:
 
     def __processdata(self, filename):
 
+        print(f"Processing data for file: {filename}")
+
         with open(filename) as fhand:
             reader = csv.reader(fhand)
             headers = next(reader)
