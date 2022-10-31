@@ -43,7 +43,7 @@ data = [
         + "<br><br>"
         + "Magnitude: %{marker.color}"
         + "<br>"
-        + "Time: %{customdata[1]}"
+        + "%{customdata[1]}"
         + "<br>"
         + "Coords: (%{lat}, %{lon})"
         + "<extra></extra>",
