@@ -26,10 +26,8 @@ for repo_dict in repo_dicts:
     owner = repo_dict["owner"]["login"]
     description = repo_dict["description"]
     if len(description) > 75:
-        lines = textwrap.wrap(description, width=75)
-        description = (
-            "<br>".join(lines) if len(lines) <= 3 else f"{'<br>'.join(lines[:3])}..."
-        )
+        lines = textwrap.wrap(description, width=75, max_lines=3)
+        description = "<br>".join(lines)
 
     hovertext = [repo_name, owner, description]
     hovertexts.append(hovertext)
